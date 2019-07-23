@@ -39,13 +39,11 @@ public abstract class TicTacTow extends GameBoard
 		return false;
 	}
 	
-	SignCount getSignCountOfRow(int r, char[][] board) {
-		/**
-		 * return the amount of player's signs and computer's signs
-		 * in 'r' row.
-		 * הערה: העברתי את הלוח כפרמטר בגלל שהמחשב משנה את הלוח כאשר הוא מחשב את המהלך הבא ולכן צריך
-		 * לקבל כפרמטר את הלוח המדומה ולא המקורי
-		 */
+	/**
+	* return the amount of player's signs and computer's signs
+	* in 'r' row.
+	*/
+	SignCount getSignCountOfRow(int r, char[][] board) {		
 		int playerCounter = 0,computerCounter = 0;
 
 		for(int j=0; j<3; j++) {
@@ -58,11 +56,11 @@ public abstract class TicTacTow extends GameBoard
 		return new SignCount(playerCounter, computerCounter);
 	}
 	
+	/**
+	* return the amount of player's signs and computer's signs
+	* in 'c' Column.
+	*/
 	SignCount getSignCountOfCol(int c, char[][] board) {
-		/**
-		 * return the amount of player's signs and computer's signs
-		 * in 'c' Column.
-		 */
 		int playerCounter = 0,computerCounter = 0;
 
 		for(int j=0; j<3; j++) {
@@ -75,11 +73,11 @@ public abstract class TicTacTow extends GameBoard
 		return new SignCount(playerCounter, computerCounter);
 	}
 	
+	/**
+	* return the amount of player's signs and computer's signs
+	* in specified diagonal.
+	*/
 	SignCount getSignCountDiagonal(DiagonalType dt, char[][] board) {
-		/**
-		 * return the amount of player's signs and computer's signs
-		 * in specified diagonal.
-		 */
 		int playerCounter = 0,computerCounter = 0;
 		
 		if(dt == DiagonalType.LEFT) {
@@ -112,11 +110,11 @@ public abstract class TicTacTow extends GameBoard
 		return true;
 	}
 	
+	/**
+	* update the Game State, this method should be called after any move made
+	* by player or computer.
+	*/
 	void updateGameState() {
-		/**
-		 * update the Game State, this method should be called after any move made
-		 * by player or computer.
-		 */
 		SignCount counter = null;
 		
 		//Rows check..
