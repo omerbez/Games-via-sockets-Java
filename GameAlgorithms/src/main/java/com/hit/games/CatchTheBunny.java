@@ -58,12 +58,12 @@ public abstract class CatchTheBunny extends GameBoard
 				gameState = GameState.PLAYER_WON;
 	}
 	
-	protected GameMove createMoveByDirection(GameMove pos, Direction dir) {
-		/**
-		 * Create and return 'GameMove' object which represent the new position after moving
-		 * one step from 'pos' by 'dir' direction
-		 * return null if 'pos' or 'dir' is null.
-		 */		
+	/**
+	* Create and return 'GameMove' object which represent the new position after moving
+	* one step from 'pos' by 'dir' direction
+	* return null if 'pos' or 'dir' is null.
+	*/	
+	protected GameMove createMoveByDirection(GameMove pos, Direction dir) {	
 		if(pos == null || dir==null)
 			return null;
 
