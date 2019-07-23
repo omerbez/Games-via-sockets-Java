@@ -12,25 +12,25 @@ public class TicTacTowSmart extends TicTacTow
 		updateGameState();
 	}
 	
-	private MoveQuality calcComputerBestMove(char[][] illustratedBoard) {
-		/**
-		 * The "calcBestMove" method was separated into 2 methods ('calcComputerBestMove' and 'calcPlayerBestMove')
-		 * In order to keep on "Single responsibility principle".
-		 * in addition, the Recursion's stop-conditions has been changed from 'n' steps to full steps (until full board).
-		 * 
-		 * This method and 'calcPlayerBestMove' method calculates the computer best move by Recursion.
-		 * It thinks ahead until game-over or until finding a "sure-move".
-		 * note that the different between "getComputerBestMove()" and this method ("calcComputerBestMove()")
-		 * is, that the first one does NOT thinks ahead - it returns only a "sure move" (winning move or losing move..)
-		 * while the later one does..  
-		 */
+	/**
+	 * The "calcBestMove" method was separated into 2 methods ('calcComputerBestMove' and 'calcPlayerBestMove')
+	 * In order to keep on "Single responsibility principle".
+	 * in addition, the Recursion's stop-conditions has been changed from 'n' steps to full steps (until full board).
+	 * 
+	 * This method and 'calcPlayerBestMove' method calculates the computer best move by Recursion.
+	 * It thinks ahead until game-over or until finding a "sure-move".
+	 * note that the different between "getComputerBestMove()" and this method ("calcComputerBestMove()")
+	 * is, that the first one does NOT thinks ahead - it returns only a "sure move" (winning move or losing move..)
+	 * while the later one does..  
+	 */
+	private MoveQuality calcComputerBestMove(char[][] illustratedBoard) {	
 		if(isBoardAlmostFull(illustratedBoard)) {
 			MoveQuality m = getComputerBestMove(illustratedBoard);
 			return m;
 		}
 		else {
 			MoveQuality m = getComputerBestMove(illustratedBoard);
-			if(m.rank >= 90)
+			if(m.rank == 100)
 				return m; //find a sure move, no need to think ahead..
 				
 			//Think ahead and figure out the best move..
@@ -54,17 +54,17 @@ public class TicTacTowSmart extends TicTacTow
 		}
 	}
 	
+	/**
+	 * See 'calcComputerBestMove' method for indormation.
+	 */
 	private MoveQuality calcPlayerBestMove(char[][] illustratedBoard) {
-		/**
-		 * See 'calcComputerBestMove' method for indormation.
-		 */
 		if(isBoardAlmostFull(illustratedBoard)) {
 			MoveQuality m = getPlayerBestMove(illustratedBoard);
 			return m;
 		}
 		else {
 			MoveQuality m = getPlayerBestMove(illustratedBoard);
-			if(m.rank <= 10)
+			if(m.rank == 0)
 				return m; //find a sure move, no need to think ahead..
 				
 			//Think ahead and figure out the best move..
@@ -89,11 +89,11 @@ public class TicTacTowSmart extends TicTacTow
 		}
 	}
 	
-	private boolean isBoardAlmostFull(char[][] board) {
-		/**
-		 * return true if the there is only 1 empty cell left in the board,
-		 * false otherwise.
-		 */
+	/**
+	 * return true if the there is only 1 empty cell left in the board,
+	 * false otherwise.
+	 */
+	private boolean isBoardAlmostFull(char[][] board) {		
 		int counter = 0;
 		for(int i=0; i<3; i++) {
 			for(int j=0; j<3; j++)
@@ -102,80 +102,13 @@ public class TicTacTowSmart extends TicTacTow
 		}
 		
 		return counter==1;
-	}
-	
-//	private MoveQuality calcBestMove(char[][] illustratedBoard, int n, boolean comTurn)
-//	{
-//		/**
-//		 * Calculate the best move by thinking ahead 'n' moves.
-//		 * this method should be used only for testing purpose - to test the AI behavior
-//		 * for different 'n' values. 
-//		 */
-//		if(n==1) {
-//			MoveQuality m = comTurn ? getComputerBestMove(illustratedBoard) : getPlayerBestMove(illustratedBoard);
-//			return m;
-//		}
-//		else
-//			if(comTurn) {
-//				MoveQuality m = getComputerBestMove(illustratedBoard);
-//				if(m.rank >= 90)
-//					return m; //find a sure move, no need to think ahead..
-//				
-//				//Think ahead and figure out the best move..
-//				MoveQuality maxMove = new MoveQuality();
-//				
-//				for(int i=0; i<3; i++)
-//				{
-//					for(int j=0; j<3; j++) {
-//						if(illustratedBoard[i][j] == NO_SIGN) {
-//							illustratedBoard[i][j] = COMPUTER_SIGN;
-//							
-//							m = calcBestMove(illustratedBoard, n-1, !comTurn);
-//							illustratedBoard[i][j] = NO_SIGN;
-//							if(n==2)
-//								System.out.println("["+i+"]["+j+"] , r:"+m.rank);
-//							
-//							if(m.rank > maxMove.rank)
-//								maxMove.set(i, j, m.rank);
-//						}
-//					}
-//				}
-//				
-//				return maxMove;
-//			}
-//			else {
-//				//It's player turn..
-//				MoveQuality m = getPlayerBestMove(illustratedBoard);
-//				if(m.rank <= 10)
-//					return m; //find a sure move, no need to think ahead..
-//				
-//				//Think ahead and figure out the best move..
-//				MoveQuality minMove = new MoveQuality();
-//				minMove.rank = 101; //the default rank is -1 and we are looking for a minimum value..
-//				
-//				for(int i=0; i<3; i++)
-//				{
-//					for(int j=0; j<3; j++) {
-//						if(illustratedBoard[i][j] == NO_SIGN) {
-//							illustratedBoard[i][j] = PLAYER_SIGN;
-//							
-//							m = calcBestMove(illustratedBoard, n-1, !comTurn);
-//							illustratedBoard[i][j] = NO_SIGN;
-//							
-//							if(m.rank < minMove.rank)
-//								minMove.set(i, j, m.rank);
-//						}
-//					}
-//				}
-//				return minMove;
-//			}
-//	}  
+	} 
 	
 	
-	private MoveQuality getComputerBestMove(char[][] board) {
-		/**
-		 * return the computer best move, based on thinking only one move ahead.
-		 */
+	/**
+	 * return the computer best move, based on thinking only one move ahead.
+	 */
+	private MoveQuality getComputerBestMove(char[][] board) {	
 		int max = -1;
 		GameMove bestMove = new GameMove(-1, -1);
 		int r;
@@ -202,12 +135,12 @@ public class TicTacTowSmart extends TicTacTow
 		return new MoveQuality(bestMove, max);
 	}
 	
-	private MoveQuality getPlayerBestMove(char[][] board) {
-		/**
-		 * Guess and return the player best move, based on thinking only one move ahead.
-		 * The returned rank is the minimal! the rank is always associated to the computer..
-		 * so the less computer rank - the more plater rank..
-		 */
+	/**
+	 * Guess and return the player best move, based on thinking only one move ahead.
+	 * The returned rank is the minimal! the rank is always associated to the computer..
+	 * so the less computer rank - the more plater rank..
+	 */
+	private MoveQuality getPlayerBestMove(char[][] board) {		
 		int min = 100; //The minimum of the computer board rank is best to the player..
 		GameMove bestMove = new GameMove(-1, -1);
 		int r;
@@ -235,18 +168,18 @@ public class TicTacTowSmart extends TicTacTow
 		return new MoveQuality(bestMove, min);
 	}
 	
+	/**
+	 * Calc and return the computer rank for the 'board' parameter,
+	 * The board represent a move - done by computer or player.
+	 * Parameters:
+	 * 		board: the game board to calc the rank.
+	 * 		comTurn: true if it's now the computer turn AND IT SHOULD PLAY NOW, false otherwise (mean that the computer
+	 * 				 already played and now it's the player turn)
+	 * 				 the board rank is affected by the turn, for example X|X| | is great
+	 * 				 if the it's "X" turn now (He put X and win) but not that great if it's
+	 * 			     "O" turn (put "O" at the top right corner and block..)
+	 */
 	private int rankBoard(char[][] board, boolean comTurn) {
-		/**
-		 * Calc and return the computer rank for the 'board' parameter,
-		 * The board represent a move - done by computer or player.
-		 * Parameters:
-		 * 		board: the game board to calc the rank.
-		 * 		comTurn: true if it's now the computer turn AND IT SHOULD PLAY NOW, false otherwise (mean that the computer
-		 * 				 already played and now it's the player turn)
-		 * 				 the board rank is affected by the turn, for example X|X| | is great
-		 * 				 if the it's "X" turn now (He put X and win) but not that great if it's
-		 * 			     "O" turn (put "O" at the top right corner and block..)
-		 */
 		MutableInteger niceMoves = new MutableInteger(0); //of the computer or player, depends on "comTurn" param
 		SignCount counter = null;
 		int r;
@@ -277,21 +210,21 @@ public class TicTacTowSmart extends TicTacTow
 		if(!comTurn)
 			return niceMoves.getValue()>=2 ? 90 : niceMoves.getValue()==1 ? 70 : 50;
 		else
-			return niceMoves.getValue()>=2 ? 0 : 50;
+			return niceMoves.getValue()>=2 ? 2 : 50;
 	}
 	
-	private int getLoopResult(SignCount counter, MutableInteger niceCounter, boolean comTurn) {
-		/**
-		 * Containts the Loops logic in order to reuse it
-		 * instead of "copy paste"..
-		 */
+	/**
+	 * Containts the Loops logic in order to reuse it
+	 * instead of "copy paste"..
+	 */
+	private int getLoopResult(SignCount counter, MutableInteger niceCounter, boolean comTurn) {		
 		if(!comTurn) {
 			//Player turn now
 			if(counter.getComputerCounter() == 3)
 				return 100; //A win spot..
 			
 			if(counter.getPlayerCounter() == 2 && counter.getComputerCounter() == 0 )
-				return 0; //Losing next turn, Must avoid the move..
+				return 1; //Losing next turn, Must avoid the move..
 			
 			if(counter.getComputerCounter() == 2 && counter.getPlayerCounter() == 0) {
 				niceCounter.increase(); //"nice" move.. the computer has 2 pieces in the row, and the player has nothing..
@@ -304,7 +237,7 @@ public class TicTacTowSmart extends TicTacTow
 				return 0; //Player will win!
 			
 			if(counter.getComputerCounter() == 2 && counter.getPlayerCounter() == 0) {
-				return 100; //computer will win next turn
+				return 99; //computer will win next turn
 			}
 			
 			if(counter.getPlayerCounter() == 2 && counter.getComputerCounter() == 0) {
@@ -316,10 +249,11 @@ public class TicTacTowSmart extends TicTacTow
 		return 50;
 	}
 	
+	
+	/**
+	 * Class which represent the move position and the rank of this move.
+	 */
 	private static class MoveQuality {
-		/**
-		 * Class which represent the move position and the rank of this move.
-		 */
 		private int row, col;
 		private int rank;
 		
