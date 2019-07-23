@@ -46,11 +46,12 @@ public class CatchTheBunnySmart extends CatchTheBunny
 		return min;
 	}
 	
+	
+	/**
+	* A class which holds the information required for ranking the state/game
+	*/
 	private static class RankParams
 	{
-		/**
-		 * A class which holds the information required for ranking the state/game
-		 */
 		private int distanceFromPlayer, borderDistance;
 		
 		public RankParams(int playerDistance, int borderDistance) {
